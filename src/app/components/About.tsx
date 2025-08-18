@@ -91,7 +91,7 @@ const About: React.FC = () => {
             </div>
             <div className="text-gray-400 text-sm ml-4 flex items-center gap-2">
               <Terminal className="h-4 w-4" />
-              about@developer:~$
+              about@devran:~$
             </div>
           </div>
           
@@ -99,7 +99,7 @@ const About: React.FC = () => {
           <div className="p-6 font-mono">
             {/* Command */}
             <div className="text-green-400 mb-4">
-              <span className="text-blue-400">developer@portfolio</span>
+              <span className="text-blue-400">devran@portfolio</span>
               <span className="text-white">:</span>
               <span className="text-purple-400">~</span>
               <span className="text-white">$ </span>
@@ -110,7 +110,7 @@ const About: React.FC = () => {
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-900/20 border border-blue-500/30 rounded text-blue-400 text-sm mb-6">
                 <User className="h-4 w-4" />
-                <span># About Developer</span>
+                <span># About devran</span>
               </div>
               
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 font-mono">
@@ -131,7 +131,7 @@ const About: React.FC = () => {
             {/* Skills section */}
             <div className="mb-8">
               <div className="text-green-400 mb-4">
-                <span className="text-blue-400">developer@portfolio</span>
+                <span className="text-blue-400">devran@portfolio</span>
                 <span className="text-white">:</span>
                 <span className="text-purple-400">~</span>
                 <span className="text-white">$ </span>
@@ -206,7 +206,7 @@ const About: React.FC = () => {
 
             {/* Command prompt */}
             <div className="text-green-400 animate-pulse">
-              <span className="text-blue-400">developer@portfolio</span>
+              <span className="text-blue-400">devran@portfolio</span>
               <span className="text-white">:</span>
               <span className="text-purple-400">~</span>
               <span className="text-white">$ </span>

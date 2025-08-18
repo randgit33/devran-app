@@ -3,6 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Linkedin, Github, MessageCircle, Terminal, Send } from 'lucide-react';
 
+// --- FIX: Moved the constant array outside the component ---
+const commands = [
+  'init contact_module...',
+  'loading communication protocols...',
+  'establishing connection...',
+  'ready for input'
+];
+
 const Contact: React.FC = () => {
   const [currentCommand, setCurrentCommand] = useState<string>('');
   const [isTyping, setIsTyping] = useState<boolean>(false);
@@ -12,13 +20,6 @@ const Contact: React.FC = () => {
     email: '',
     message: ''
   });
-
-  const commands = [
-    'init contact_module...',
-    'loading communication protocols...',
-    'establishing connection...',
-    'ready for input'
-  ];
 
   useEffect(() => {
     let commandIndex = 0;
@@ -42,6 +43,7 @@ const Contact: React.FC = () => {
     };
 
     setTimeout(typeCommand, 500);
+  // --- FIX: Dependency array is now empty as 'commands' is a stable constant ---
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -126,13 +128,13 @@ const Contact: React.FC = () => {
                   
                   <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 font-mono">
                     <span className="text-green-400">{'>'} </span>
-                    Let's Create Something
+                    Let&apos;s Create Something
                     <span className="text-cyan-400"> Amazing Together</span>
                   </h2>
                   
                   <div className="text-gray-400 text-sm space-y-1">
-                    <div><span className="text-blue-400">// </span>Always interested in new opportunities and exciting projects</div>
-                    <div><span className="text-blue-400">// </span>Whether you have a question or just want to say hello</div>
+                    <div><span className="text-blue-400">{'// '}</span>Always interested in new opportunities and exciting projects</div>
+                    <div><span className="text-blue-400">{'// '}</span>Whether you have a question or just want to say hello</div>
                   </div>
                 </div>
 

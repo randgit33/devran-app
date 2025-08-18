@@ -1,8 +1,7 @@
-
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Github, Linkedin, Mail, Code2, Terminal } from 'lucide-react';
+import React, { useState, useEffect} from 'react';
+import { Github, Linkedin, Mail, Code2, Terminal } from 'lucide-react';
 
 // Type definitions
 interface HeroProps {
@@ -14,32 +13,33 @@ const Hero: React.FC<HeroProps> = ({ name, designation }) => {
   const [typedText, setTypedText] = useState<string>('');
   const [showCursor, setShowCursor] = useState<boolean>(true);
   const [showPrompt, setShowPrompt] = useState<boolean>(false);
-  const effectRan = useRef<boolean>(false);
-
+  
   useEffect(() => {
-    if (effectRan.current) return;
-    effectRan.current = true;
-    
-    // Reset states
+    // Reset states on name change
     setTypedText('');
     setShowCursor(true);
     setShowPrompt(false);
-    
-    // Show prompt first
+
+    // Variables to hold timer IDs
+    let typingTimeout: NodeJS.Timeout;
+    let typingInterval: NodeJS.Timeout;
+    let cursorInterval: NodeJS.Timeout;
+
+    // --- FIX: Changed 'promptTimeout' to be a const ---
     const promptTimeout = setTimeout(() => {
       setShowPrompt(true);
       
       // Start typing after prompt appears
-      const typingTimeout = setTimeout(() => {
+      typingTimeout = setTimeout(() => {
         let i = 0;
-        const typingInterval = setInterval(() => {
+        typingInterval = setInterval(() => {
           if (i < name.length) {
             setTypedText(name.substring(0, i + 1));
             i++;
           } else {
             clearInterval(typingInterval);
             // Start cursor blinking after typing is complete
-            const cursorInterval = setInterval(() => {
+            cursorInterval = setInterval(() => {
               setShowCursor((prev) => !prev);
             }, 500);
           }
@@ -48,8 +48,12 @@ const Hero: React.FC<HeroProps> = ({ name, designation }) => {
       
     }, 500);
 
+    // Cleanup function to clear all timers
     return () => {
       clearTimeout(promptTimeout);
+      clearTimeout(typingTimeout);
+      clearInterval(typingInterval);
+      clearInterval(cursorInterval);
     };
   }, [name]);
 
@@ -217,8 +221,6 @@ const Hero: React.FC<HeroProps> = ({ name, designation }) => {
           </a>
         </div>
       </div>
-
-      {/* Scroll indicator */}
     </section>
   );
 };

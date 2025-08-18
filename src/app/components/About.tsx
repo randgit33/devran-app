@@ -119,11 +119,13 @@ const About: React.FC = () => {
                 <span className="text-cyan-400"> Technical Vision</span>
               </h2>
               
+              {/* --- FIX START --- */}
               <div className="text-gray-300 max-w-3xl mx-auto space-y-2 text-left">
-                <div><span className="text-blue-400">// </span>Full-stack developer who loves turning complex problems</div>
-                <div><span className="text-blue-400">// </span>into simple, elegant solutions.</div>
-                <div><span className="text-blue-400">// </span>Expertise in modern web technologies and system design.</div>
+                <div><span className="text-blue-400">{'// '}</span>Full-stack developer who loves turning complex problems</div>
+                <div><span className="text-blue-400">{'// '}</span>into simple, elegant solutions.</div>
+                <div><span className="text-blue-400">{'// '}</span>Expertise in modern web technologies and system design.</div>
               </div>
+              {/* --- FIX END --- */}
             </div>
 
             {/* Skills section */}

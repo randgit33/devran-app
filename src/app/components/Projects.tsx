@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Github, ExternalLink, Code2, Folder, Terminal, Play } from 'lucide-react';
+// --- FIX: Removed unused 'ExternalLink' import ---
+import { Github, Code2, Folder, Terminal, Play } from 'lucide-react';
 
 // Type definitions
 interface Project {
@@ -15,7 +16,7 @@ interface Project {
 }
 
 const Projects: React.FC = () => {
-  const [currentProject, setCurrentProject] = useState<number>(0);
+  // --- FIX: Removed unused 'currentProject' state ---
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [visibleProjects, setVisibleProjects] = useState<number>(0);
 
@@ -146,14 +147,16 @@ const Projects: React.FC = () => {
                   </h2>
                   
                   <div className="text-gray-400 text-sm">
-                    <span className="text-blue-400">// </span>
+                    {/* --- FIX: Wrapped comment in braces --- */}
+                    <span className="text-blue-400">{'// '}</span>
                     Recent repositories and deployed applications
                   </div>
                 </div>
 
                 {/* Projects list */}
                 <div className="space-y-4">
-                  {projects.slice(0, visibleProjects).map((project, index) => (
+                  {/* --- FIX: Removed unused 'index' variable --- */}
+                  {projects.slice(0, visibleProjects).map((project) => (
                     <div
                       key={project.id}
                       className="group bg-gray-800/30 border border-gray-700 rounded-lg p-6 hover:border-green-500/50 hover:bg-gray-800/50 transition-all duration-300"
@@ -174,7 +177,8 @@ const Projects: React.FC = () => {
                           </div>
                           
                           <p className="text-gray-300 mb-4 leading-relaxed">
-                            <span className="text-blue-400">// </span>{project.description}
+                            {/* --- FIX: Wrapped comment in braces --- */}
+                            <span className="text-blue-400">{'// '}</span>{project.description}
                           </p>
 
                           {/* Technologies */}
@@ -230,7 +234,8 @@ const Projects: React.FC = () => {
                   {visibleProjects === projects.length && (
                     <div className="text-center py-4">
                       <div className="text-green-400 font-mono text-sm">
-                        <span className="text-blue-400">// </span>
+                        {/* --- FIX: Wrapped comment in braces --- */}
+                        <span className="text-blue-400">{'// '}</span>
                         All projects loaded successfully
                       </div>
                     </div>

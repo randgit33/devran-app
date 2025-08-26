@@ -56,7 +56,7 @@ const Projects: React.FC = () => {
    id: '5',
       title: 'Genius Fish Pre-Registration Website',
       description: 'A pre-registration website for the Genius Fish app, featuring a modern design and user-friendly interface.',
-      technologies: ['Laravel', 'Tailwind CSS', 'Firestore', 'FastAPI'],
+      technologies: ['Laravel', 'Tailwind CSS', 'Firestore'],
       status: 'private'
   },
 

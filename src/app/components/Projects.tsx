@@ -38,11 +38,12 @@ const Projects: React.FC = () => {
       status: 'deployed'
     },
     {
-      id: '3',
-      title: 'Genius Fish Pre-Registration Website',
-      description: 'A pre-registration website for the Genius Fish app, featuring a modern design and user-friendly interface.',
-      technologies: ['Laravel', 'Tailwind CSS', 'Firestore', 'FastAPI'],
-      status: 'private'
+      id :'3',
+    title : 'Genius Fish Landing Page',
+    description : 'Landing Page for Genius Fish App',
+    technologies: ['NextJS', 'Tailwind CSS', 'Typescript','React'],
+    link: 'https://fortitudegenius.com/gfish',
+    status : 'deployed'
     },
     {
     id : '4',
@@ -52,12 +53,13 @@ const Projects: React.FC = () => {
     status : 'private'
   },
   {
-    id :'5',
-    title : 'Genius Fish Landing Page',
-    description : 'Landing Page for Genius Fish App',
-    technologies: ['NextJS', 'Tailwind CSS', 'Typescript','React'],
-    status : 'development'
+   id: '5',
+      title: 'Genius Fish Pre-Registration Website',
+      description: 'A pre-registration website for the Genius Fish app, featuring a modern design and user-friendly interface.',
+      technologies: ['Laravel', 'Tailwind CSS', 'Firestore', 'FastAPI'],
+      status: 'private'
   },
+
   ];
 
   useEffect(() => {

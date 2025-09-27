@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Github, ExternalLink } from 'lucide-react';
+import {  ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
-
+import Image from 'next/image';
 interface Project {
   title: string;
   tags: string[];
@@ -64,7 +64,12 @@ const Projects: React.FC = () => {
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
             <div className="relative overflow-hidden">
-              <img src={project.imageUrl} alt={project.title} className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110" />
+              <Image 
+              src={project.imageUrl}
+               alt={project.title}
+               width={500}
+               height={500}
+               className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110" />
             </div>
             <div className="p-6">
               <h3 className="text-xl font-bold mb-2 text-gray-100">{project.title}</h3>

@@ -26,7 +26,7 @@ const Contact: React.FC = () => {
     <Section id="contact" title="Get In Touch">
       <div className="max-w-xl mx-auto text-center">
         <p className="text-lg text-gray-300 mb-8">
-          I'm currently open to new opportunities. If you have a project in mind or just want to connect, feel free to reach out.
+          I&apos;m currently open to new opportunities. If you have a project in mind or just want to connect, feel free to reach out.
         </p>
         <a 
           href="mailto:randeygiffary33@gmail.com" 

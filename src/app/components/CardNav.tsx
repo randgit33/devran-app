@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 // use your own icon import if react-icons is not available
 import { GoArrowUpRight } from 'react-icons/go';
@@ -22,8 +22,6 @@ export interface CardNavProps {
   ease?: string;
   baseColor?: string;
   menuColor?: string;
-  buttonBgColor?: string;
-  buttonTextColor?: string;
 }
 
 const CardNav: React.FC<CardNavProps> = ({
@@ -32,16 +30,19 @@ const CardNav: React.FC<CardNavProps> = ({
   ease = 'power3.out',
   baseColor = '#fff',
   menuColor,
-  buttonBgColor,
-  buttonTextColor
 }) => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const navRef = useRef<HTMLDivElement | null>(null);
-  const cardsRef = useRef<HTMLDivElement[]>([]);
+  // Initializing with an empty array of the correct type
+  const cardsRef = useRef<HTMLDivElement[]>([]); 
   const tlRef = useRef<gsap.core.Timeline | null>(null);
 
-  const calculateHeight = () => {
+  // ---
+  // Fix 1: Wrap side-effect expression with an assignment or void 
+  // to satisfy ESLint's no-unused-expressions rule
+  // ---
+  const calculateHeight = useCallback(() => {
     const navEl = navRef.current;
     if (!navEl) return 260;
 
@@ -59,7 +60,9 @@ const CardNav: React.FC<CardNavProps> = ({
         contentEl.style.position = 'static';
         contentEl.style.height = 'auto';
 
-        contentEl.offsetHeight;
+        // Fix: Use 'void' keyword to explicitly indicate this expression's value is being ignored, 
+        // satisfying the no-unused-expressions rule.
+        void contentEl.offsetHeight; 
 
         const topBar = 60;
         const padding = 16;
@@ -74,14 +77,21 @@ const CardNav: React.FC<CardNavProps> = ({
       }
     }
     return 260;
-  };
+  }, []); // calculateHeight doesn't depend on any state or props directly
 
-  const createTimeline = () => {
+  // ---
+  // Fix 2: Wrap createTimeline in useCallback and add dependencies
+  // to satisfy the exhaustive-deps rule for useLayoutEffect
+  // ---
+  const createTimeline = useCallback(() => {
     const navEl = navRef.current;
     if (!navEl) return null;
 
+    // Ensure cardsRef.current is a clean array for GSAP
+    const validCards = cardsRef.current.filter(Boolean);
+
     gsap.set(navEl, { height: 60, overflow: 'hidden' });
-    gsap.set(cardsRef.current, { y: 50, opacity: 0 });
+    gsap.set(validCards, { y: 50, opacity: 0 });
 
     const tl = gsap.timeline({ paused: true });
 
@@ -91,11 +101,12 @@ const CardNav: React.FC<CardNavProps> = ({
       ease
     });
 
-    tl.to(cardsRef.current, { y: 0, opacity: 1, duration: 0.4, ease, stagger: 0.08 }, '-=0.1');
+    tl.to(validCards, { y: 0, opacity: 1, duration: 0.4, ease, stagger: 0.08 }, '-=0.1');
 
     return tl;
-  };
+  }, [ease, calculateHeight]); // Dependencies of createTimeline
 
+  // useLayoutEffect 1: Initialize and update timeline
   useLayoutEffect(() => {
     const tl = createTimeline();
     tlRef.current = tl;
@@ -104,25 +115,31 @@ const CardNav: React.FC<CardNavProps> = ({
       tl?.kill();
       tlRef.current = null;
     };
-  }, [ease, items]);
+  }, [ease, items, createTimeline]); // Added createTimeline
 
+  // useLayoutEffect 2: Handle resize
   useLayoutEffect(() => {
     const handleResize = () => {
+      // Re-create the timeline logic is now safe because createTimeline is stable (via useCallback)
+      // or will re-run when its dependencies change.
       if (!tlRef.current) return;
 
+      // Kill the existing timeline for a clean recreation
+      tlRef.current.kill(); 
+
+      const newTl = createTimeline();
+
       if (isExpanded) {
+        // If expanded, set the height immediately and play the new timeline to its end
         const newHeight = calculateHeight();
         gsap.set(navRef.current, { height: newHeight });
 
-        tlRef.current.kill();
-        const newTl = createTimeline();
         if (newTl) {
           newTl.progress(1);
           tlRef.current = newTl;
         }
       } else {
-        tlRef.current.kill();
-        const newTl = createTimeline();
+        // If not expanded, just update the timeline reference to the new one (height remains 60)
         if (newTl) {
           tlRef.current = newTl;
         }
@@ -131,7 +148,7 @@ const CardNav: React.FC<CardNavProps> = ({
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [isExpanded]);
+  }, [isExpanded, createTimeline, calculateHeight]); // Added createTimeline and calculateHeight
 
   const toggleMenu = () => {
     const tl = tlRef.current;
@@ -148,7 +165,9 @@ const CardNav: React.FC<CardNavProps> = ({
   };
 
   const setCardRef = (i: number) => (el: HTMLDivElement | null) => {
+    // Only set if element is present to avoid creating null/undefined entries in the array initially
     if (el) cardsRef.current[i] = el;
+    else delete cardsRef.current[i]; // Optionally clean up if a card is unmounted
   };
 
   return (
@@ -181,8 +200,7 @@ const CardNav: React.FC<CardNavProps> = ({
             />
           </div>
 
-         
-        
+
         </div>
 
         <div

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-
+import Image from 'next/image';
 const skills: string[] = ['React', 'Next.js', 'TypeScript',  'Tailwind CSS', 'MySQL','Laravel','Firebase'];
 
 const Section: React.FC<{ id: string; title: string; children: React.ReactNode }> = ({ id, title, children }) => {
@@ -40,22 +40,24 @@ const About: React.FC = () => {
         >
           <div className="relative w-full max-w-xs mx-auto p-2 border-2 border-violet-500/30 rounded-full">
             <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-500 rounded-full blur-2xl opacity-40"></div>
-            <img 
+            <Image
               src="/assets/akugwej.jpg" 
               alt="Devran" 
+              width={500}
+              height={500}
               className="relative w-full rounded-full shadow-lg"
             />
           </div>
         </motion.div>
         <div className="md:col-span-3 text-lg text-gray-300 space-y-6">
           <p>
-            Hello, I'm currently a college student studying in Universitas Muslim Indonesia, Faculty of Computer Science and my major is Informatics Engineering
+            Hello, I&apos;m currently a college student studying in Universitas Muslim Indonesia, Faculty of Computer Science and my major is Informatics Engineering
           </p>
           <p>
-            I'm a passionate Full-Stack Developer creating beautiful, functional, and user-centric web applications. My tech journey began with a fascination for how things work, evolving into a passion for coding and elegant problem-solving.
+            I&apos;m a passionate Full-Stack Developer creating beautiful, functional, and user-centric web applications. My tech journey began with a fascination for how things work, evolving into a passion for coding and elegant problem-solving.
           </p>
           <p>
-            I thrive in collaborative environments, always eager to learn new technologies and push the boundaries of what's possible on the web.
+            I thrive in collaborative environments, always eager to learn new technologies and push the boundaries of what&apos;s possible on the web.
           </p>
           <div className="mt-8">
             <h3 className="text-xl font-semibold text-violet-400 mb-4">Core Skills</h3>

@@ -3,13 +3,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Briefcase, Download } from 'lucide-react';
+import { Briefcase} from 'lucide-react';
 import { motion } from 'framer-motion';
 
-interface HeroProps {
-  name: string;
-  designation: string;
-}
+// NOTE: Removed 'HeroProps' definition as it was defined but never used.
 
 const Hero: React.FC = () => {
   const name = "Randey";
@@ -46,7 +43,7 @@ const Hero: React.FC = () => {
           className="space-y-6 z-10" // 3. Added z-10 for content visibility
         >
           <h1 className="text-5xl md:text-7xl font-bold">
-            Hi, I'm <span className="text-violet-400">{name}</span>
+            Hi, I&apos;m <span className="text-violet-400">{name}</span>
           </h1>
           <p className="text-xl md:text-3xl text-gray-400 h-10 md:h-12 font-mono">
             {typedDesignation}
@@ -67,7 +64,7 @@ const Hero: React.FC = () => {
           
           </motion.div>
         </motion.div>
-        
+      
     </section>
   );
 };

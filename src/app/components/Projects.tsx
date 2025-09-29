@@ -29,6 +29,18 @@ const projectData: Project[] = [
     tags: ["NextJS", "TypeScript", "React"],
     liveUrl: "https://fortitudegenius.com/gxcLP",
     imageUrl: "/assets/lpgxc.png"
+  },
+   {
+    title: "Genius Fish Event Pre-registration",
+    tags: ["Laravel", "Firebase", "Tailwind"],
+    liveUrl: "#",
+    imageUrl: "/assets/preregist.png"
+  },
+   {
+    title: "Genius Fish Web Verificator",
+    tags: ["NextJS", "Typescript", "React","Firebase"],
+    liveUrl: "#",
+    imageUrl: "/assets/webverif.png"
   }
 ];
 

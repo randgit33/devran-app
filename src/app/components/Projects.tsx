@@ -27,7 +27,7 @@ const projectData: Project[] = [
   {
     title: "Global Exposure Community Landing Page",
     tags: ["NextJS", "TypeScript", "React"],
-    liveUrl: "https://fortitudegenius.com/gxcLP",
+    liveUrl: "https://fortitudegenius.com/global-xpo",
     imageUrl: "/assets/lpgxc.png"
   },
    {

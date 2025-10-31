@@ -30,6 +30,13 @@ const projectData: Project[] = [
     liveUrl: "https://fortitudegenius.com/global-xpo",
     imageUrl: "/assets/lpgxc.png"
   },
+  {
+    title: "GeniusLMS (Learning Management System",
+    tags: ["Vite", "TypeScript", "React"],
+    liveUrl: "https://fortitudegenius.com/geniusLMS",
+    imageUrl: "/assets/lms.png"
+  },
+
    {
     title: "Genius Fish Event Pre-registration",
     tags: ["Laravel", "Firebase", "Tailwind"],

@@ -2,51 +2,69 @@
 
 import React from 'react';
 import { Github, Linkedin, Mail } from 'lucide-react';
-import { motion } from 'framer-motion';
-
-const Section: React.FC<{ id: string; title: string; children: React.ReactNode }> = ({ id, title, children }) => (
-    <motion.section 
-      id={id}
-      className="py-24 md:py-32"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.6 }}
-    >
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 relative">
-          {title}
-          <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-24 h-1 bg-violet-500 rounded-full"></span>
-        </h2>
-        {children}
-    </motion.section>
-);
+import AnimatedSection from './AnimatedSection';
+import { useLanguage } from '../context/LanguageContext'; // Import hook
 
 const Contact: React.FC = () => {
+  const { t } = useLanguage(); // Use translations
+
   return (
-    <Section id="contact" title="Get In Touch">
-      <div className="max-w-xl mx-auto text-center">
-        <p className="text-lg text-gray-300 mb-8">
-          I&apos;m currently open to new opportunities. If you have a project in mind or just want to connect, feel free to reach out.
-        </p>
-        <a 
-          href="mailto:randeygiffary33@gmail.com" 
-          className="inline-block bg-violet-600 text-white font-bold text-lg py-4 px-10 rounded-full hover:bg-violet-700 transition-all duration-300 shadow-lg shadow-violet-500/20 transform hover:scale-105"
-        >
-          Say Hello
-        </a>
-        <div className="flex justify-center gap-8 mt-12">
-          <a href="https://github.com/randgit33" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet-400 transition-transform hover:scale-110" aria-label="GitHub Profile">
-            <Github size={32} />
+    <AnimatedSection 
+      id="contact" 
+      title={t.contact.title} 
+      sectionNumber="04"
+    >
+      <div className="grid md:grid-cols-2 gap-12 items-center bg-white border border-slate-200 rounded-2xl shadow-sm p-8 md:p-12">
+        <div className="text-center md:text-left">
+          <p className="text-lg text-slate-700 mb-8">
+            {t.contact.p1} {/* Use translation */}
+          </p>
+          <a 
+            href="mailto:randeygiffary33@gmail.com" 
+            className="inline-block bg-indigo-600 text-white font-bold text-lg py-4 px-10 rounded-full hover:bg-indigo-700 transition-all duration-300 shadow-lg shadow-indigo-200 transform hover:scale-105"
+          >
+            {t.contact.button} {/* Use translation */}
           </a>
-          <a href="https://linkedin.com/in/randgfry" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet-400 transition-transform hover:scale-110" aria-label="LinkedIn Profile">
-            <Linkedin size={32} />
+        </div>
+
+        <div className="flex flex-col gap-6 items-center md:items-start md:border-l md:border-slate-200 md:pl-12">
+          <a 
+            href="https://github.com/randgit33" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex items-center gap-3 text-slate-600 hover:text-indigo-600 transition-colors group"
+            aria-label="GitHub Profile"
+          >
+            <Github size={24} />
+            <span className="text-lg font-medium group-hover:underline">
+              {t.contact.github} {/* Use translation */}
+            </span>
           </a>
-          <a href="mailto:randeygiffary33@gmail.com" className="text-gray-400 hover:text-violet-400 transition-transform hover:scale-110" aria-label="Email Contact">
-            <Mail size={32} />
+          <a 
+            href="https://linkedin.com/in/randgfry" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex items-center gap-3 text-slate-600 hover:text-indigo-600 transition-colors group"
+            aria-label="LinkedIn Profile"
+          >
+            <Linkedin size={24} />
+            <span className="text-lg font-medium group-hover:underline">
+              {t.contact.linkedin} {/* Use translation */}
+            </span>
+          </a>
+          <a 
+            href="mailto:randeygiffary33@gmail.com" 
+            className="flex items-center gap-3 text-slate-600 hover:text-indigo-600 transition-colors group"
+            aria-label="Email Contact"
+          >
+            <Mail size={24} />
+            <span className="text-lg font-medium group-hover:underline">
+              {t.contact.email} {/* Use translation */}
+            </span>
           </a>
         </div>
       </div>
-    </Section>
+    </AnimatedSection>
   );
 };
 

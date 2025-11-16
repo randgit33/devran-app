@@ -1,113 +1,62 @@
 'use client';
 
 import React from 'react';
-import {  ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-interface Project {
-  title: string;
-  tags: string[];
-  liveUrl: string;
-  imageUrl: string;
-}
+import AnimatedSection from './AnimatedSection';
+import { useLanguage } from '../context/LanguageContext'; // Import hook
 
-const projectData: Project[] = [
-  {
-    title: "PT. Fortitude Genius Indonesia Landing Page",
-    tags: ["NextJS", "TypeScript", "React"],
-    liveUrl: "https://fortitudegenius.com",
-    imageUrl: "/assets/lpfgi.png"
-  },
-  {
-    title: "Genius Fish Landing Page",
-    tags: ["NextJS", "TypeScript", "React"],
-    liveUrl: "https://fortitudegenius.com/gfish",
-    imageUrl: "/assets/lpgfish.png"
-  },
-  {
-    title: "Global Exposure Community Landing Page",
-    tags: ["NextJS", "TypeScript", "React"],
-    liveUrl: "https://fortitudegenius.com/global-xpo",
-    imageUrl: "/assets/lpgxc.png"
-  },
-  {
-    title: "GeniusLMS (Learning Management System",
-    tags: ["Vite", "TypeScript", "React"],
-    liveUrl: "https://fortitudegenius.com/geniusLMS",
-    imageUrl: "/assets/lms.png"
-  },
-
-   {
-    title: "Genius Fish Event Pre-registration",
-    tags: ["Laravel", "Firebase", "Tailwind"],
-    liveUrl: "#",
-    imageUrl: "/assets/preregist.png"
-  },
-   {
-    title: "Genius Fish Web Verificator",
-    tags: ["NextJS", "Typescript", "React","Firebase"],
-    liveUrl: "#",
-    imageUrl: "/assets/webverif.png"
-  }
-];
-
-const Section: React.FC<{ id: string; title: string; children: React.ReactNode }> = ({ id, title, children }) => (
-    <motion.section 
-      id={id}
-      className="py-24 md:py-32"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6 }}
-    >
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 relative">
-          {title}
-          <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-24 h-1 bg-violet-500 rounded-full"></span>
-        </h2>
-        {children}
-    </motion.section>
-);
-
+// Project type and data are now imported from i18n
+// const projectData: Project[] = [ ... ]; // REMOVED
 
 const Projects: React.FC = () => {
+  const { t } = useLanguage(); // Use translations
+  const projectData = t.projects.projectData; // Get data from translations
+
   return (
-    <Section id="projects" title="My Projects">
+    <AnimatedSection 
+      id="projects" 
+      title={t.projects.title} 
+      sectionNumber="03"
+      className="bg-slate-50/50"
+    >
+      <p className="text-lg text-slate-600 text-left -mt-8 mb-16 max-w-2xl">
+        {t.projects.subtitle} {/* Use translation */}
+      </p>
+
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projectData.map((project, index) => (
           <motion.div 
             key={index}
-            className="bg-gray-900/40 border border-violet-500/20 rounded-xl overflow-hidden group transform transition-all duration-300 hover:border-violet-500/50 hover:shadow-2xl hover:shadow-violet-500/10 hover:-translate-y-2 backdrop-blur-md"
+            className="relative h-80 rounded-xl overflow-hidden group transform transition-all duration-300 shadow-lg"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
-            <div className="relative overflow-hidden">
-              <Image 
+            <Image 
               src={project.imageUrl}
-               alt={project.title}
-               width={500}
-               height={500}
-               className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110" />
-            </div>
-            <div className="p-6">
-              <h3 className="text-xl font-bold mb-2 text-gray-100">{project.title}</h3>
+              alt={project.title}
+              layout="fill"
+              objectFit="cover"
+              className="w-full h-full" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+              <h3 className="text-xl font-bold mb-2 text-white">{project.title}</h3>
               <div className="flex flex-wrap gap-2 mb-4">
                 {project.tags.map(tag => (
-                  <span key={tag} className="text-xs font-semibold bg-violet-500/20 text-violet-300 px-3 py-1 rounded-full">{tag}</span>
+                  <span key={tag} className="text-xs font-semibold bg-white/20 text-white px-3 py-1 rounded-full">{tag}</span>
                 ))}
               </div>
-              <div className="flex items-center justify-end gap-4 mt-6">
-            
-                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet-400 transition-colors" aria-label={`Live demo of ${project.title}`}>
-                  <ExternalLink size={24} />
-                </a>
-              </div>
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-indigo-300 hover:text-white transition-colors flex items-center gap-2" aria-label={`Live demo of ${project.title}`}>
+                {t.projects.viewProject} <ExternalLink size={18} /> {/* Use translation */}
+              </a>
             </div>
           </motion.div>
         ))}
       </div>
-    </Section>
+    </AnimatedSection>
   );
 };
 

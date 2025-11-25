@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import CardNav from './components/CardNav';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -9,16 +9,13 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
-// Import our new context hook and modal
 import { useLanguage } from './context/LanguageContext';
-import LanguageModal from './components/LanguageModal';
+import LanguageSwitcher from './components/LanguageSwitcher';
 
 export default function Home() {
-  const { language, setLanguage, t } = useLanguage();
-  const [isHydrated, setIsHydrated] = useState(false); // Prevents flash of wrong content
+  const { setLanguage, t } = useLanguage();
 
   useEffect(() => {
-    // Check localStorage when the component mounts
     let storedLanguage: string | null = null;
     try {
       storedLanguage = localStorage.getItem('language');
@@ -29,46 +26,35 @@ export default function Home() {
     if (storedLanguage) {
       setLanguage(storedLanguage as 'en' | 'id');
     }
-    setIsHydrated(true); // Hydration is complete
   }, [setLanguage]);
 
-  const handleLanguageSelect = (lang: 'en' | 'id') => {
-    setLanguage(lang);
-  };
-
-  // --- Logic Gate ---
-  // If we haven't checked localStorage yet, show nothing
-  if (!isHydrated) {
-    return null; 
-  }
-
-  // --- FIX: Check the React 'language' state, not localStorage ---
-  // If no language is set in our state, show the modal.
-  if (!language) {
-    return <LanguageModal onSelectLanguage={handleLanguageSelect} />;
-  }
-
-  // --- Main Page ---
-  // If language IS set, show the full page
   return (
-    <div className="font-sans antialiased relative"> 
-      <div>
-        <CardNav
-          // Use the translated nav items
-          items={t.navItems} 
-          baseColor="#fff"
-          menuColor="#000"
-          ease="power3.out"
-        />
-        <main>
-          <Hero />
-          <About />
-          <Career />
-          <Projects />
-          <Contact />
-        </main>
-        <Footer />
+    <div className="relative min-h-screen overflow-hidden bg-[var(--bg-primary)]">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-white via-transparent to-transparent" aria-hidden="true" />
+        <div className="absolute right-10 top-32 h-32 w-32 rounded-full border border-black/10" aria-hidden="true" />
       </div>
+
+      <CardNav
+        items={t.navItems}
+        baseColor="#ffffff"
+        menuColor="#050505"
+        ease="power3.out"
+        className=""
+        availabilityLabel={t.cardNav.availability}
+        contactLabel={t.cardNav.contact}
+      />
+
+      <main className="relative z-10 flex flex-col gap-0">
+        <Hero />
+        <About />
+        <Career />
+        <Projects />
+        <Contact />
+        <Footer />
+      </main>
+
+      <LanguageSwitcher />
     </div>
   );
 }

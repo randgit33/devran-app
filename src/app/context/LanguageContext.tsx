@@ -1,11 +1,11 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { translations, Language, Translation } from '../lib/il8n';
 
 // Define what the context will provide
 interface LanguageContextType {
-  language: Language | null; // Allow null
+  language: Language;
   setLanguage: (language: Language) => void;
   t: Translation; // 't' will be the translation object
 }
@@ -15,9 +15,18 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 // Create the Provider component
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  // 1. --- FIX: Default to null ---
-  // This represents that no choice has been made yet.
-  const [language, setLanguageState] = useState<Language | null>(null);
+  const [language, setLanguageState] = useState<Language>('en');
+
+  useEffect(() => {
+    try {
+      const storedLanguage = localStorage.getItem('language');
+      if (storedLanguage === 'en' || storedLanguage === 'id') {
+        setLanguageState(storedLanguage);
+      }
+    } catch (e) {
+      console.warn("Could not read language from localStorage:", e);
+    }
+  }, []);
 
   // Function to change language and save choice to localStorage
   const setLanguage = (lang: Language) => {
@@ -29,9 +38,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     setLanguageState(lang);
   };
 
-  // 2. --- FIX: Handle null language ---
-  // If language is null (modal is showing), default to 'en' translations.
-  const t = language ? translations[language] : translations.en;
+  const t = translations[language];
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>

@@ -1,60 +1,81 @@
 'use client';
 
 import React from 'react';
-import { Calendar } from 'lucide-react';
+import { Calendar, ArrowUpRight } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
-import { useLanguage } from '../context/LanguageContext'; // Import hook
-
-// CareerEntry type is now imported from i18n
-// const careerHistory: CareerEntry[] = [ ... ]; // REMOVED
+import { useLanguage } from '../context/LanguageContext';
+import { motion } from 'framer-motion';
 
 const Career: React.FC = () => {
-  const { t } = useLanguage(); // Use translations
-  const careerHistory = t.career.history; // Get data from translations
+  const { t } = useLanguage();
+  const careerHistory = t.career.history;
+  const sidebar = t.career.sidebar;
 
   return (
-    <AnimatedSection 
-      id="career" 
-      title={t.career.title} 
+    <AnimatedSection
+      id="career"
+      title={t.career.title}
       sectionNumber="02"
     >
-        <p className="text-lg text-slate-600 text-left -mt-8 mb-16 max-w-2xl">
-            {t.career.subtitle} {/* Use translation */}
-        </p>
+      <div className="-mt-8 mb-16 max-w-3xl text-lg text-neutral-600">
+        {t.career.subtitle}
+      </div>
 
-        <div className="relative border-l-2 border-slate-200 pl-10 space-y-12">
-            {careerHistory.map((job, index) => (
-                <div key={index} className="relative">
-                    <div className="absolute -left-12 -top-1 w-4 h-4 bg-indigo-600 rounded-full border-4 border-white"></div>
-                    <div className="p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
-                        <div className="flex flex-col md:flex-row justify-between md:items-center">
-                            <div>
-                                <h3 className="font-bold text-2xl text-gray-900">{job.role}</h3>
-                                <p className="font-semibold text-indigo-700 mt-1 text-lg">{job.company}</p>
-                            </div>
-                            <p className="text-sm text-slate-500 mt-2 md:mt-0 flex items-center gap-2">
-                                <Calendar size={14} /> {job.duration}
-                            </p>
-                        </div>
-                        <ul className="mt-6 space-y-3 text-slate-700 list-disc list-inside">
-                            {job.description.map((point, i) => (
-                                <li key={i}>{point}</li>
-                            ))}
-                        </ul>
-                        <div className="mt-6 pt-4 border-t border-slate-200">
-                            <h4 className="font-semibold text-gray-900 mb-3">Key Technologies:</h4>
-                            <div className="flex flex-wrap gap-2">
-                                {job.technologies.map((tech) => (
-                                    <span key={tech} className="bg-slate-100 text-slate-700 text-xs font-medium px-3 py-1 rounded-full border border-slate-200">
-                                        {tech}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+      <div className="relative grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="space-y-10">
+          {careerHistory.map((job, index) => (
+            <motion.div
+              key={job.company}
+              className="group relative overflow-hidden rounded-[32px] border border-black/10 bg-white p-9 shadow-[0_25px_80px_rgba(15,15,15,0.08)]"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ delay: index * 0.12, duration: 0.6, ease: 'easeOut' }}
+            >
+              <div className="relative space-y-6">
+                <div className="flex flex-wrap items-center gap-4">
+                  <p className="rounded-full border border-black/10 px-4 py-2 text-xs uppercase tracking-[0.4em] text-neutral-500">
+                    {job.company}
+                  </p>
+                  <span className="flex items-center gap-2 text-sm text-neutral-500">
+                    <Calendar size={16} />
+                    {job.duration}
+                  </span>
                 </div>
-            ))}
+                <div className="flex flex-col gap-3">
+                  <h3 className="text-3xl font-semibold tracking-tight text-black">
+                    {job.role}
+                  </h3>
+                  <div className="text-base text-neutral-600">
+                    {job.description.map((point) => (
+                      <p key={point} className="mb-3">
+                        {point}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+                <div className="rounded-3xl border border-black/5 bg-neutral-50 p-4">
+                  <p className="text-xs uppercase tracking-[0.4em] text-neutral-500">
+                    Key Technologies
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {job.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-full border border-black/10 bg-white px-4 py-1.5 text-xs font-medium uppercase tracking-[0.35em] text-neutral-500"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
+
+      
+      </div>
     </AnimatedSection>
   );
 };

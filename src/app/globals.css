@@ -1,4 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
+:root {
+  color-scheme: light;
+  --bg-primary: #f8f7f4;
+  --bg-secondary: #ffffff;
+  --text-primary: #060606;
+  --text-muted: #6f6f6f;
+  --grid-color: rgba(10, 10, 10, 0.04);
+}
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+}
+
+body::before {
+  background: radial-gradient(circle at 20% 20%, rgba(0, 0, 0, 0.06), transparent 50%),
+    radial-gradient(circle at 80% 0%, rgba(18, 18, 18, 0.05), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(12, 12, 12, 0.04), transparent 35%);
+}
+
+body::after {
+  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 90px 90px;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  z-index: -1;
+}
+
+.frame-shell {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(249, 248, 245, 0.9));
+  box-shadow: 0 20px 60px rgba(15, 15, 15, 0.08);
+}
+
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch" /%3E%3C/filter%3E%3Crect width="160" height="160" filter="url(%23n)" opacity="0.06"/%3E%3C/svg%3E');
+  opacity: 0.4;
+}
+
+.serif {
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+}
+
+.mono-tracking {
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 2rem;
+  animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

@@ -5,53 +5,80 @@ import { ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import AnimatedSection from './AnimatedSection';
-import { useLanguage } from '../context/LanguageContext'; // Import hook
-
-// Project type and data are now imported from i18n
-// const projectData: Project[] = [ ... ]; // REMOVED
+import { useLanguage } from '../context/LanguageContext';
 
 const Projects: React.FC = () => {
-  const { t } = useLanguage(); // Use translations
-  const projectData = t.projects.projectData; // Get data from translations
+  const { t } = useLanguage();
+  const projectData = t.projects.projectData;
 
   return (
-    <AnimatedSection 
-      id="projects" 
-      title={t.projects.title} 
+    <AnimatedSection
+      id="projects"
+      title={t.projects.title}
       sectionNumber="03"
-      className="bg-slate-50/50"
+      className="relative"
     >
-      <p className="text-lg text-slate-600 text-left -mt-8 mb-16 max-w-2xl">
-        {t.projects.subtitle} {/* Use translation */}
+      <p className="-mt-8 mb-16 max-w-2xl text-lg text-neutral-600">
+        {t.projects.subtitle}
       </p>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid gap-8 lg:grid-cols-2">
         {projectData.map((project, index) => (
-          <motion.div 
-            key={index}
-            className="relative h-80 rounded-xl overflow-hidden group transform transition-all duration-300 shadow-lg"
-            initial={{ opacity: 0, y: 50 }}
+          <motion.div
+            key={project.title}
+            className="group relative overflow-hidden rounded-[32px] border border-black/10 bg-white p-1 shadow-[0_25px_90px_rgba(15,15,15,0.08)]"
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ delay: index * 0.08, duration: 0.6, ease: 'easeOut' }}
           >
-            <Image 
-              src={project.imageUrl}
-              alt={project.title}
-              layout="fill"
-              objectFit="cover"
-              className="w-full h-full" 
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-              <h3 className="text-xl font-bold mb-2 text-white">{project.title}</h3>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tags.map(tag => (
-                  <span key={tag} className="text-xs font-semibold bg-white/20 text-white px-3 py-1 rounded-full">{tag}</span>
-                ))}
+            <div className="relative flex flex-col gap-6 rounded-[28px] bg-white p-8">
+              <div className="relative h-64 overflow-hidden rounded-3xl border border-black/5 bg-neutral-100">
+                <Image
+                  src={project.imageUrl}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 600px"
+                  className="object-cover transition duration-700 group-hover:scale-105"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+                <div className="absolute bottom-5 left-5 flex items-center gap-2 rounded-full border border-white/40 bg-white/70 px-4 py-1 text-xs uppercase tracking-[0.3em] text-black/60">
+                  {t.projects.caseStudyLabel}
+                </div>
               </div>
-              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-indigo-300 hover:text-white transition-colors flex items-center gap-2" aria-label={`Live demo of ${project.title}`}>
-                {t.projects.viewProject} <ExternalLink size={18} /> {/* Use translation */}
-              </a>
+
+              <div className="space-y-4">
+                <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.4em] text-neutral-400">
+                  <span className="h-px w-10 bg-neutral-200" />
+                  {project.tags.slice(0, 3).join(' · ')}
+                </div>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="text-3xl font-semibold tracking-tight text-black">
+                      {project.title}
+                    </h3>
+                  </div>
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Live demo of ${project.title}`}
+                    className="rounded-full border border-black/10 bg-black p-3 text-white transition hover:bg-white hover:text-black"
+                  >
+                    <ExternalLink size={18} />
+                  </a>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-black/10 bg-neutral-50 px-4 py-2 text-xs uppercase tracking-[0.3em] text-neutral-500"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           </motion.div>
         ))}
